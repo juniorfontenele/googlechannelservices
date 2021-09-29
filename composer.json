@@ -1,5 +1,6 @@
 {
     "name": "juniorfontenele/googlechannelservices",
+    "version": "1.0.0",
     "require": {
         "google/cloud-channel": "^0.5.0"
     },
