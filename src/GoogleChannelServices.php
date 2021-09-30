@@ -76,8 +76,8 @@ class GoogleChannelServices {
       $productsArray[] = [
         'id' => $id,
         'name' => $name,
-        'displayName' => $product->getMarketingInfo()->getDisplayName(),
-        'image' => $product->getMarketingInfo()->getDefaultLogo()->getContent()
+        'displayName' => $product->getMarketingInfo()?->getDisplayName(),
+        'image' => $product->getMarketingInfo()?->getDefaultLogo()?->getContent()
       ];
     }
     return $productsArray;
@@ -111,8 +111,8 @@ class GoogleChannelServices {
           $skusArray[] = [
             'id' => $id,
             'name' => $name,
-            'displayName' => $sku->getMarketingInfo()->getDisplayName(),
-            'image' => $sku->getMarketingInfo()->getDefaultLogo()->getContent()
+            'displayName' => $sku->getMarketingInfo()?->getDisplayName(),
+            'image' => $sku->getMarketingInfo()?->getDefaultLogo()?->getContent()
           ];
         }
       }
@@ -149,29 +149,29 @@ class GoogleChannelServices {
       foreach ($entitlement->getParameters() as $parameter) {
         switch ($parameter->getName()) {
           case 'num_units':
-            $parameters['num_units'] = $parameter->getValue()->getInt64Value();
+            $parameters['num_units'] = $parameter->getValue()?->getInt64Value();
             break;
           case 'max_units':
-            $parameters['max_units'] = $parameter->getValue()->getInt64Value();
+            $parameters['max_units'] = $parameter->getValue()?->getInt64Value();
             break;
           case 'assigned_units':
-            $parameters['assigned_units'] = $parameter->getValue()->getInt64Value();
+            $parameters['assigned_units'] = $parameter->getValue()?->getInt64Value();
             break;  
         }
       }
-      $productId = $entitlement->getProvisionedService()->getProductId();
+      $productId = $entitlement->getProvisionedService()?->getProductId();
       $product = $this->getProductById($productId);
-      $skuId = $entitlement->getProvisionedService()->getSkuId();
+      $skuId = $entitlement->getProvisionedService()?->getSkuId();
       $sku = $this->getProductSkuById($productId, $skuId);
       $entitlementsArray[] = [
         'id' => $id,
         'name' => $name,
         'offer' => $entitlement->getOffer(),
-        'createTime' => $entitlement->getCreateTime()->toDateTime(),
-        'startTime' => $entitlement->getCommitmentSettings()->getStartTime()->toDateTime(),
-        'endTime' => $entitlement->getCommitmentSettings()->getEndTime()->toDateTime(),
+        'createTime' => $entitlement->getCreateTime()?->toDateTime(),
+        'startTime' => $entitlement->getCommitmentSettings()?->getStartTime()?->toDateTime(),
+        'endTime' => $entitlement->getCommitmentSettings()?->getEndTime()?->toDateTime(),
         'provisionedService' => [
-          'id' => $entitlement->getProvisionedService()->getProvisioningId(),
+          'id' => $entitlement->getProvisionedService()?->getProvisioningId(),
           'productId' => $productId,
           'productName' => $product['displayName'],
           'skuId' => $skuId,
