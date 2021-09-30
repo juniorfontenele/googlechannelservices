@@ -158,6 +158,7 @@ class GoogleChannelServices {
             $parameters['assigned_units'] = $parameter->getValue()?->getInt64Value();
             break;  
         }
+        $parameters['num_units'] = array_key_exists('num_units', $parameters) ? $parameters['num_units'] : $parameters['max_units'];
       }
       $productId = $entitlement->getProvisionedService()?->getProductId();
       $product = $this->getProductById($productId);
